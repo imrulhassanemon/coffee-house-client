@@ -1,17 +1,39 @@
+import Swal from 'sweetalert2'
 const AddCoffee = () => {
     // handelAddcoffee
     const handelAddcoffee = (e) =>{
         e.preventDefault()
         const form = e.target; 
         const name = form.name.value;
-        // const qunatity = form.qunatity.value;
-        // const supplier = form.supplier.value;
-        // const test = form.test.value;
-        // const category = form.category.value;
-        // const details = form.details.value;
-        // const photourl = form.photourl.value;
-        // const newCoffee = {name, qunatity, supplier, test, category, details, photourl};
-        console.log(name);
+        const quantity = form.quantity.value;
+        const supplier = form.supplier.value;
+        const test = form.test.value;
+        const category = form.category.value;
+        const details = form.details.value;
+        const photourl = form.photourl.value;
+        const newCoffee = {name, quantity, supplier, test, category, details, photourl};
+        console.log(JSON.stringify(newCoffee));
+
+        // send data to serverside 
+        fetch('http://localhost:5000/coffee', {
+          method:'POST',
+          headers:{
+            'content-type':'application/json'
+          },
+          body:JSON.stringify(newCoffee)
+        })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          if(data.insertedId){
+            Swal.fire({
+              title: 'Success!',
+              text: 'You are successfully added user',
+              icon: 'success',
+              confirmButtonText: 'Close'
+            })
+          }
+        })
     }
   return (
     <div className="mt-12 ">
@@ -125,7 +147,7 @@ const AddCoffee = () => {
             </label>
           </div>
             <div>
-            <input type="button" className="btn btn-neutral btn-block mt-5" value="Add Coffee" />
+            <input type="submit" className="btn btn-neutral  mt-5" value="Add Coffee" />
             </div>        
         </div>
         
