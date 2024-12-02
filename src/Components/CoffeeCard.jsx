@@ -3,9 +3,10 @@ import Swal from 'sweetalert2'
 import { MdDeleteForever, MdOutlineEdit } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-const CoffeeCard = ({ coffee }) => {
+const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
   const {_id,  name, quantity, supplier, test, category, details, photourl } =
     coffee;
+    console.log(coffees);
 
     const handelDelete = (_id)=>{
         console.log(_id);
@@ -25,14 +26,18 @@ const CoffeeCard = ({ coffee }) => {
               .then(res => res.json())
               .then(data => {
                 console.log(data);
-                if(result.deletedCount> 0){
+                if(data.deletedCount> 0){
                     Swal.fire({
                         title: "Deleted!",
-                        text: "Your file has been deleted.",
+                        text: "Coffee has been deleted successfully.",
                         icon: "success"
                       });
-                }
-              })
+
+                      const remaining = coffees.filter(cof => cof._id !== _id)
+                      setCoffees(remaining)
+                   
+                  }
+                })
             }
           });
     }
