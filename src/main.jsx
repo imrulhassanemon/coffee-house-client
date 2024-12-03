@@ -9,6 +9,9 @@ import {
 import { Toaster } from 'react-hot-toast';
 import AddCoffee from './Components/AddCoffee.jsx';
 import UpdateCoffee from './Components/UpdateCoffee.jsx';
+import SignIn from './Components/SignIn.jsx';
+import Signup from './Components/Signup.jsx';
+import AuthProvider from './Components/AuthProvider.jsx';
 
 const router = createBrowserRouter([
   {
@@ -24,13 +27,23 @@ const router = createBrowserRouter([
     path:'updateCoffee/:id',
     element: <UpdateCoffee></UpdateCoffee>,
     loader: ({params}) => fetch(`http://localhost:5000/coffee/${params.id}`)
+  },
+  {
+    path:'signin',
+    element:<SignIn></SignIn>
+  },
+  {
+    path:'signup', 
+    element:<Signup></Signup>
   }
 ]);
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <AuthProvider>
     <Toaster></Toaster>
     <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 )

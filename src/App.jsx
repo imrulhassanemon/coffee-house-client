@@ -1,6 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import CoffeeCard from "./Components/CoffeeCard";
 import { useState } from "react";
+import Navbar from "./Components/Navbar";
 
 function App() {
   const loadedCoffees = useLoaderData();
@@ -8,7 +9,11 @@ function App() {
 
 
   return (
-    <div className="w-11/12 lg:w-10/12 mx-auto">
+    <div>
+      <div>
+        <Navbar></Navbar>
+      </div>
+      <div className="w-11/12 lg:w-10/12 mx-auto">
       <h1 className="text-6xl text-center">
         Number of coffee {coffees.length}
       </h1>
@@ -22,6 +27,7 @@ function App() {
           ></CoffeeCard>
         ))}
       </div>
+    </div>
     </div>
   );
 }
