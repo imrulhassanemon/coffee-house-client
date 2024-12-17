@@ -3,8 +3,9 @@ import { NavLink } from "react-router-dom";
 const Navbar = () => {
   const Home = <NavLink to={"/"}>Home</NavLink>;
   const addCoffee = <NavLink to={"/addCoffee"}>Add Coffee</NavLink>;
-  const signup = <NavLink to={"/signup"}>Sign Up</NavLink>;
-  const signin = <NavLink to={"/signin"}>Sign In</NavLink>;
+  const signup = <NavLink to={"/signup"}>Login</NavLink>;
+  const signin = <NavLink to={"/signin"}>Register</NavLink>;
+  const users = <NavLink to={"/users"}>Users</NavLink>;
   return (
       <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -36,10 +37,10 @@ const Navbar = () => {
               <a>{addCoffee}</a>
             </li>
             <li>
-              <a>{signin}</a>
+              {users}
             </li>
             <li>
-              <a>{addCoffee}</a>
+              {signin}
             </li>
           </ul>
         </div>
@@ -53,6 +54,12 @@ const Navbar = () => {
           <li>
             <a>{addCoffee}</a>
           </li>
+          <li>
+            <a>{users}</a>
+          </li>
+          <li>
+              {signup}
+            </li>
         </ul>
       </div>
       <div className="navbar-end">

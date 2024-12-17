@@ -1,7 +1,9 @@
 import { useContext } from "react";
 import { AuthContext } from "./AuthProvider";
 import toast from "react-hot-toast";
-import Swal from 'sweetalert2/dist/sweetalert2.js'
+import Swal, { swal }  from 'sweetalert2/dist/sweetalert2.js'
+import Navbar from "./Navbar";
+import axios from "axios";
 
 const SignIn = () => {
 
@@ -22,28 +24,43 @@ const SignIn = () => {
           const newUser  = {name, email, createdAt}
             console.log(result.user);
 
-            // Save User data in the server
-            fetch("http://localhost:5000/users", {
-                method:"POST",
-                headers:{
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(newUser)
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log('User Created To Db',data);
-                if(data.insertedId){
-                  Swal.fire({
-                    title: 'Success!',
-                    text: 'Successfully Added Users',
-                    icon: 'success',
-                    confirmButtonText: 'Cool'
-                  })
-                }
-                from.reset();
 
+            axios.post('http://localhost:5000/users', newUser)
+            .then(data => {
+              console.log(data.data);
+              if(data.data.insertedId){
+                Swal.fire({
+                  title: "Good job!",
+                  text: "You register successfully",
+                  icon: "success"
+                });
+              }
             })
+
+
+
+            // Save User data in the server using fetch
+            // fetch("http://localhost:5000/users", {
+            //     method:"POST",
+            //     headers:{
+            //         'content-type': 'application/json'
+            //     },
+            //     body: JSON.stringify(newUser)
+            // })
+            // .then(res => res.json())
+            // .then(data => {
+            //     console.log('User Created To Db',data);
+            //     if(data.insertedId){
+            //       Swal.fire({
+            //         title: 'Success!',
+            //         text: 'Successfully Added Users',
+            //         icon: 'success',
+            //         confirmButtonText: 'Cool'
+            //       })
+            //     }
+            //     from.reset();
+
+            // })
 
         })
         .catch(error => {
@@ -54,6 +71,7 @@ const SignIn = () => {
 
   return (
     <div>
+      <Navbar></Navbar>
       <div className="hero bg-base-200 min-h-screen">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">

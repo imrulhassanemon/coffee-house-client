@@ -1,28 +1,47 @@
 import { createContext, useState } from "react";
 import auth from "../Firebase/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
-export  const AuthContext = createContext()
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 
-const AuthProvider = ({children}) => {
+const queryClient = new QueryClient()
 
-    const [user, setUser] = useState(null)
-    const [loading, setLoading] = useState(true)
 
-    const createEmailandPasswor = (email, password) => {
-        return createUserWithEmailAndPassword(auth, email, password)
-    }
+export const AuthContext = createContext();
 
-    const AuthInfo = {
-        name: 'imrul',
-        createEmailandPasswor,
+const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    }
-    return (
-        <AuthContext.Provider value={AuthInfo}>
-            {children}
-        </AuthContext.Provider>
-    );
+  const createEmailandPasswor = (email, password) => {
+    setLoading(true);
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const signIn = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const AuthInfo = {
+    name: "imrul",
+    createEmailandPasswor,
+    signIn,
+  };
+  return (
+    <AuthContext.Provider value={AuthInfo}>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;
